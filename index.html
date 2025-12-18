@@ -15,20 +15,240 @@
 
 <body>
     <div id="container">
-        <h1 class="text-light">ZERO Coin</h1>
+        <h1 class="text-light game-title">ZERO Coin</h1>
         <div id="coin"></div>
+        <div id="rare-coin" class="rare-coin"></div>
         <div class="text-light" id="counter">Taps: 0</div>
+        <div id="combo-meter" class="combo-meter">
+            <div id="combo-display" class="combo-display">Combo: 0x</div>
+            <div id="combo-bar" class="combo-bar">
+                <div id="combo-fill" class="combo-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Pattern Indicator -->
+        <div id="pattern-indicator" class="pattern-indicator" style="display: none;">
+            <div id="pattern-name" class="pattern-name"></div>
+            <div id="pattern-visual" class="pattern-visual"></div>
+            <div id="pattern-timer" class="pattern-timer"></div>
+        </div>
+        
+        <!-- Pattern Bonus Display -->
+        <div id="pattern-bonus" class="pattern-bonus" style="display: none;">
+            <span id="pattern-bonus-text"></span>
+        </div>
         <div class="text-light" id="progress-bar">
             <div id="progress"></div>
+            <span id="progress-text">0%</span>
         </div>
-        <div class="text-light" id="message">You've reached 1000 taps!</div>
-
+        <div class="text-light" id="message">You've reached 1000 taps! 👑</div>
+        <div id="stats" class="stats-container"></div>
         
-        <a class="btn btn-primary mt-5" href="https://t.me/zok1rjonovo_me" role="button">support</a>
-        <div class="d-flex gap-2 mt-5">
-            <!-- <button type="button" class="btn btn-warning" id="clear">Clear</button> -->
-            <!-- <button type="button" class="btn btn-warning" id="add">Add 999 coin</button> -->
-        </div> 
+        <!-- Auto-Tapper Section -->
+        <div id="auto-tapper-section" class="auto-tapper-section">
+            <button id="auto-tapper-btn" class="auto-tapper-btn" disabled>
+                <span id="auto-tapper-icon">⚡</span>
+                <span id="auto-tapper-text">Auto-Tapper</span>
+            </button>
+            <div id="auto-tapper-status" class="auto-tapper-status"></div>
+            <div id="auto-tapper-timer" class="auto-tapper-timer"></div>
+        </div>
+        
+        <!-- Multiplier Section -->
+        <div id="multiplier-section" class="multiplier-section">
+            <div id="active-multiplier" class="active-multiplier"></div>
+            <div class="multiplier-buttons">
+                <button class="multiplier-btn" data-multiplier="2">
+                    <span class="multiplier-value">2x</span>
+                    <span class="multiplier-duration">15s</span>
+                </button>
+                <button class="multiplier-btn" data-multiplier="3">
+                    <span class="multiplier-value">3x</span>
+                    <span class="multiplier-duration">12s</span>
+                </button>
+                <button class="multiplier-btn" data-multiplier="5">
+                    <span class="multiplier-value">5x</span>
+                    <span class="multiplier-duration">8s</span>
+                </button>
+            </div>
+            <div id="multiplier-timer" class="multiplier-timer"></div>
+        </div>
+        
+        <!-- Feature Buttons -->
+        <div class="feature-buttons">
+            <button id="prestige-btn" class="feature-btn">🏆 Prestige</button>
+            <button id="achievements-btn" class="feature-btn">🎖️ Achievements</button>
+            <button id="leaderboard-btn" class="feature-btn">📊 Leaderboard</button>
+            <button id="skins-btn" class="feature-btn">🎨 Skins</button>
+            <button id="minigames-btn" class="feature-btn">🎮 Mini-Games</button>
+            <button id="daily-btn" class="feature-btn">📅 Daily</button>
+            <button id="shop-btn" class="feature-btn">🛒 Shop</button>
+            <button id="share-btn" class="feature-btn">📤 Share</button>
+            <button id="timetrial-btn" class="feature-btn">⏱️ Time Trials</button>
+        </div>
+        
+        <!-- Sound Controls -->
+        <div class="sound-controls">
+            <button id="sound-toggle" class="sound-btn" title="Toggle Sound Effects">
+                <span id="sound-icon">🔊</span>
+            </button>
+            <button id="music-toggle" class="sound-btn" title="Toggle Background Music">
+                <span id="music-icon">🎵</span>
+            </button>
+        </div>
+        
+        <!-- Prestige Modal -->
+        <div id="prestige-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>🏆 Prestige</h2>
+                <div id="prestige-info">
+                    <p>Reset your progress to gain permanent bonuses!</p>
+                    <div class="prestige-bonuses">
+                        <div>Current Prestige Level: <span id="prestige-level">0</span></div>
+                        <div>Bonus Multiplier: <span id="prestige-multiplier">+0%</span></div>
+                        <div>Bonus Speed: <span id="prestige-speed">+0%</span></div>
+                    </div>
+                    <div class="prestige-requirements">
+                        <p>Requires: 1000 taps to prestige</p>
+                        <p>You will gain: <span id="prestige-gain">0</span> prestige points</p>
+                    </div>
+                </div>
+                <button id="confirm-prestige" class="prestige-confirm-btn">Prestige Now</button>
+            </div>
+        </div>
+        
+        <!-- Achievements Modal -->
+        <div id="achievements-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>🎖️ Achievements</h2>
+                <div id="achievements-list" class="achievements-list"></div>
+            </div>
+        </div>
+        
+        <!-- Leaderboard Modal -->
+        <div id="leaderboard-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>📊 Leaderboard</h2>
+                <div id="leaderboard-stats" class="leaderboard-stats"></div>
+            </div>
+        </div>
+        
+        <!-- Skins Modal -->
+        <div id="skins-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>🎨 Coin Skins</h2>
+                <div id="skins-list" class="skins-list"></div>
+            </div>
+        </div>
+        
+        <!-- Mini-Games Modal -->
+        <div id="minigames-modal" class="modal">
+            <div class="modal-content minigames-modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>🎮 Mini-Games</h2>
+                <div id="minigames-list" class="minigames-list">
+                    <!-- Game selection menu -->
+                </div>
+                <div id="minigame-active" class="minigame-active" style="display: none;">
+                    <!-- Active game UI -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Daily Challenges Modal -->
+        <div id="daily-modal" class="modal">
+            <div class="modal-content daily-modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>📅 Daily Challenges</h2>
+                <div id="daily-streak" class="daily-streak">
+                    <!-- Streak display -->
+                </div>
+                <div id="daily-challenges-list" class="daily-challenges-list">
+                    <!-- Daily challenges -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="modal">
+            <div class="modal-content shop-modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>🛒 Shop</h2>
+                <div id="shop-currency" class="shop-currency">
+                    <!-- Currency display -->
+                </div>
+                <div class="shop-tabs">
+                    <button class="shop-tab active" data-tab="upgrades">⚙️ Upgrades</button>
+                    <button class="shop-tab" data-tab="cosmetics">🎨 Cosmetics</button>
+                </div>
+                <div id="shop-upgrades" class="shop-section active">
+                    <!-- Upgrades list -->
+                </div>
+                <div id="shop-cosmetics" class="shop-section">
+                    <!-- Cosmetics list -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Time Trials Modal -->
+        <div id="timetrial-modal" class="modal">
+            <div class="modal-content timetrial-modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>⏱️ Time Trials</h2>
+                <div id="timetrial-status" class="timetrial-status" style="display: none;">
+                    <div class="timetrial-active">
+                        <h3 id="timetrial-challenge-name"></h3>
+                        <div id="timetrial-timer" class="timetrial-timer">0.00s</div>
+                        <div id="timetrial-progress" class="timetrial-progress"></div>
+                    </div>
+                </div>
+                <div id="timetrial-list" class="timetrial-list">
+                    <!-- Time trial challenges list -->
+                </div>
+                <div id="timetrial-leaderboard" class="timetrial-leaderboard">
+                    <h3>🏆 Best Times Leaderboard</h3>
+                    <div id="timetrial-leaderboard-content"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Share Modal -->
+        <div id="share-modal" class="modal">
+            <div class="modal-content share-modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>📤 Share Your Progress</h2>
+                <div class="share-options">
+                    <button id="share-screenshot-btn" class="share-option-btn">
+                        📸 Screenshot Stats
+                    </button>
+                    <button id="share-stats-btn" class="share-option-btn">
+                        📊 Share Stats Text
+                    </button>
+                    <button id="share-twitter-btn" class="share-option-btn">
+                        🐦 Share on Twitter
+                    </button>
+                    <button id="share-facebook-btn" class="share-option-btn">
+                        📘 Share on Facebook
+                    </button>
+                    <button id="share-whatsapp-btn" class="share-option-btn">
+                        💬 Share on WhatsApp
+                    </button>
+                    <button id="copy-stats-btn" class="share-option-btn">
+                        📋 Copy Stats
+                    </button>
+                </div>
+                <div id="share-preview" class="share-preview"></div>
+            </div>
+        </div>
+        
+        <!-- Load html2canvas library for screenshot functionality -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        
+        <a class="btn btn-primary mt-4 support-btn" href="https://t.me/zok1rjonovo_me" role="button">💬 Support</a>
     </div>
     <p class="author">Power by Zero</p>
 </body>
